@@ -54,6 +54,7 @@ const GameView = (props) => {
     if (props.attempts === props.maxAttempts) {
       props.setGameStatus(-1);
       props.setGameInPlay(false);
+      props.setRandomNumber(randomNumber);
       return;
     }
     //

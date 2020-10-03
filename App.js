@@ -9,6 +9,7 @@ export default function App() {
   const [gameInPlay, setGameInPlay] = useState(false);
   const [attempts, setAttempts] = useState(1);
   const [gameStatus, setGameStatus] = useState(0);
+  const [randomNumber, setRandomNumber] = useState(null);
 
   const toggleGameInPlay = () => {
     setGameInPlay(currentSetting => !currentSetting);
@@ -29,10 +30,11 @@ export default function App() {
       <Text style={styles.title}>{`Can you guess the random number between 1 and 99?`}</Text>
       <Text style={styles.title}>{`You have ${maxAttempts} goes. Good luck!`}</Text>
       <StartGameButton toggleGameInPlay={toggleGameInPlay} />
-      {gameInPlay && <GameView incrementAttempts={incrementAttempts} attempts={attempts} setGameStatus={setGameStatus} setGameInPlay={setGameInPlay} maxAttempts={maxAttempts} />}
+      {gameInPlay && <GameView incrementAttempts={incrementAttempts} attempts={attempts} setGameStatus={setGameStatus} setGameInPlay={setGameInPlay} maxAttempts={maxAttempts} setRandomNumber={setRandomNumber} />}
       {(gameStatus === -1) && (
         <CardView style={styles.gameSummaryContainer}>
           <Text style={styles.loseText}>You lost 😔</Text>
+          <Text style={styles.loseTextNumber}>{`The number was ${randomNumber}`}</Text>
         </CardView>
       )}
       {gameStatus === 1 && (
@@ -63,6 +65,9 @@ const styles = StyleSheet.create({
   loseText: {
     color: "red",
     fontSize: 30,
+  },
+  loseTextNumber: {
+    marginTop: 10,
   },
   title: {
     fontSize: 18,
