@@ -23,8 +23,6 @@ export default function App() {
 
   const maxAttempts = 6;
 
-  console.log(gameStatus);
-
   return (
     <View style={styles.main}>
       <Header title="Guess The Number" />
