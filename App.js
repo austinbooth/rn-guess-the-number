@@ -16,21 +16,22 @@ export default function App() {
     setGameStatus(0);
   }
 
-
-
   const incrementAttempts = () => {
     setAttempts((currentAttempts) => currentAttempts + 1);
 
   }
+
+  const maxAttempts = 6;
 
   console.log(gameStatus);
 
   return (
     <View style={styles.main}>
       <Header title="Guess The Number" />
-      <Text style={styles.title}>Can you guess the random number in 10 goes or less? Good luck!</Text>
+      <Text style={styles.title}>{`Can you guess the random number between 1 and 99?`}</Text>
+      <Text style={styles.title}>{`You have ${maxAttempts} goes. Good luck!`}</Text>
       <StartGameButton toggleGameInPlay={toggleGameInPlay} />
-      {gameInPlay && <GameView incrementAttempts={incrementAttempts} attempts={attempts} setGameStatus={setGameStatus} setGameInPlay={setGameInPlay} />}
+      {gameInPlay && <GameView incrementAttempts={incrementAttempts} attempts={attempts} setGameStatus={setGameStatus} setGameInPlay={setGameInPlay} maxAttempts={maxAttempts} />}
       {(gameStatus === -1) && (
         <CardView style={styles.gameSummaryContainer}>
           <Text style={styles.loseText}>You lost 😔</Text>
@@ -67,8 +68,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    marginTop: 20,
+    marginTop: 10,
     padding: 10,
+    paddingBottom: 0,
     textAlign: "center",
   },
 });
