@@ -54,10 +54,8 @@ const GameView = (props) => {
     }
     // check if lost
     if (props.attempts === props.maxAttempts) {
-      console.log("setting game status to -1...");
       props.setGameStatus(-1);
       props.setGameInPlay(false);
-      console.log("done");
       return;
     }
     //
