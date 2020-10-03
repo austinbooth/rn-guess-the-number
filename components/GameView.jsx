@@ -23,9 +23,10 @@ const GameView = (props) => {
   const [randomNumber, setRandomNumber] = useState(
     generateRandomNumber(1, 100)
   );
+
   const [enteredValue, setEnteredValue] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [selectedNumber, setSelectedNumber] = useState();
+  const [selectedNumber, setSelectedNumber] = useState("");
 
   const numberInputHandler = (input) => {
     setEnteredValue(input.replace(/[^0-9]/g, ""));
@@ -43,7 +44,25 @@ const GameView = (props) => {
       ]);
       return;
     }
+    // check if won
+    if (chosenNumber === randomNumber) {
+      console.log("setting game status to 1...");
+      props.setGameStatus(1);
+      props.setGameInPlay(false);
+      console.log("done");
+      return;
+    }
+    // check if lost
+    if (props.attempts === 10) {
+      console.log("setting game status to -1...");
+      props.setGameStatus(-1);
+      props.setGameInPlay(false);
+      console.log("done");
+      return;
+    }
+    //
     setSubmitted(true);
+    props.incrementAttempts();
     setSelectedNumber(chosenNumber);
     clearInput();
     Keyboard.dismiss();
@@ -76,19 +95,12 @@ const GameView = (props) => {
             </View>
           </View>
         </CardView>
-        {submitted && (
-          <View style={styles.summaryContainer}>
-            <Text>You chose</Text>
-            <View style={styles.selectedNumber}>
-              <Text style={styles.number}>{selectedNumber}</Text>
-            </View>
+        <View style={styles.summaryContainer}>
+          <Text>You chose</Text>
+          <View style={styles.selectedNumber}>
+            <Text style={styles.number}>{selectedNumber}</Text>
           </View>
-        )}
-        {submitted && selectedNumber === randomNumber && (
-          <CardView style={styles.summaryContainer}>
-            <Text style={styles.win}>You win!!!</Text>
-          </CardView>
-        )}
+        </View>
         {submitted && selectedNumber < randomNumber && (
           <CardView style={styles.summaryContainer}>
             <Text style={styles.higher}>Higher</Text>
@@ -160,10 +172,6 @@ const styles = StyleSheet.create({
   lower: {
     color: "blue",
     fontSize: 22,
-  },
-  win: {
-    color: "orange",
-    fontSize: 30,
   },
 });
 
