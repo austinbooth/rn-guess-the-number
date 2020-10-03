@@ -46,10 +46,8 @@ const GameView = (props) => {
     }
     // check if won
     if (chosenNumber === randomNumber) {
-      console.log("setting game status to 1...");
       props.setGameStatus(1);
       props.setGameInPlay(false);
-      console.log("done");
       return;
     }
     // check if lost
